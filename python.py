@@ -5,7 +5,25 @@ import MySQLdb
 os.system("clear")
 conexion_db=MySQLdb.connect(host="localhost",user="academia",passwd="academia",db="Exameness")
 cursor=conexion_db.cursor()
+def crear_ex():
+	os.system("clear")
+	print ("Crear examen test")
+	
+	tema = input("tema a tratar(ejemplo: videojuegos)")
+	crear1 = ("CREATE TABLE Exameness." + tema + "( id" + tema + " INT NOT NULL AUTO_INCREMENT, preguntas_" + tema + " VARCHAR(45) NULL, PRIMARY KEY (id" + tema + "));")
+	cursor.execute(crear1)
+	crear2 = ("CREATE TABLE Exameness.resp_" + tema + "( id" + tema + "2 INT NOT NULL AUTO_INCREMENT, respuesta_" + tema + " VARCHAR(200) NULL, id" + tema + " VARCHAR(1) NULL, "+ tema +"_correcta INT(1) NULL, apartado VARCHAR(45) NULL, PRIMARY KEY (id" + tema + "2));")
+	cursor.execute(crear2)
+	# ~ print "NUEVO REGISTRO"
+	# ~ dni = raw_input("DNI: ")
+	# ~ nom = raw_input("NOMBRE: ")
+	# ~ ape = raw_input("APELLIDOS: ")
+	# ~ tlf = raw_input("TELEFONO: ")
+	# ~ email = raw_input("EMAIL: ")
 
+	# ~ query="INSERT INTO alumnos (dni,nom,ape,telefono,email) values (%s,%s,%s,%s,%s)" % (dni,nom,ape,tlf,email)
+	# ~ cursor.execute(query)
+	
 def emusica():
 	os.system("clear")
 	cont = 0
@@ -16,10 +34,12 @@ def emusica():
 		for preguntas in cursor.fetchall():
 			print (preguntas[1])
 		print ("------------------------------")
+		
 		select_resp = "SELECT * FROM resp_musica WHERE idmusica = %(id)s"
 		cursor.execute(select_resp, { 'id': a })
 		for respuestas in cursor.fetchall():
 			print (respuestas[4],respuestas[1],sep=")")
+			
 		respuesta_musica = input("Solucion: ")
 		apartado = "SELECT * FROM resp_musica WHERE idmusica = %(id)s and abcd = %(apartado)s"
 		cursor.execute(apartado, { 'id': a, 'apartado': respuesta_musica })
@@ -103,22 +123,36 @@ def eturismo():
 	print ("Tu nota es",cont,sep=": ")
 	# ~ conexion_db.close()
 	input(" ")
-op=0
-while op!=5:
-	os.system("clear")
-	print ("Realizaremos un examen")
-	print ("")
-	print ("1. Musica")
-	print ("2. Natacion")
-	print ("3. Programacion")
-	print ("4. Turismo")	
-	print ("5. Salir")
-	op=int(input("opcion: "))
-	if op==1:
-		emusica()
-	elif op==2:
-		enatacion()
-	elif op==3:
-		eprogramacion()
-	elif op==4:
-		eturismo()
+ap=0
+while ap!=3:
+	op=0
+	print ("-----------------")
+	print ("|      MENU     |")
+	print ("-----------------")
+	print ("|1.Examanes     |")
+	print ("|2.Crear Examen |")
+	print ("|3.Salir        |")
+	print ("-----------------")
+	ap=int(input("Elige una opcion: "))
+	print (ap)
+	if ap==1: 
+		while op!=5:
+			os.system("clear")
+			print ("Realizaremos un examen")
+			print ("")
+			print ("1. Musica")
+			print ("2. Natacion")
+			print ("3. Programacion")
+			print ("4. Turismo")	
+			print ("5. Salir")
+			op=int(input("opcion: "))
+			if op==1:
+				emusica()
+			elif op==2:
+				enatacion()
+			elif op==3:
+				eprogramacion()
+			elif op==4:
+				eturismo()
+	if ap==2:
+		crear_ex()
