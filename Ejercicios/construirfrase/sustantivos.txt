@@ -1,0 +1,10 @@
+cerdo
+mesa
+árbol
+coche
+tren
+rana
+perro
+gato
+hombre
+mujer
